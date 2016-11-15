@@ -175,8 +175,11 @@ public class HelloAlfrescoController
     public String getAFileWithCMISWithTicket()
     {
         printCookies();
+        // for rest v0 API
+        // String URLtoGet = ALFRESCO_SERVER + "/api/-default-/public/cmis/versions/1.1/atom/content?id=" + FILE_ID;
 
-        String URLtoGet = ALFRESCO_SERVER + "/api/-default-/public/cmis/versions/1.1/atom/content?id=" + FILE_ID;
+        String URLtoGet = ALFRESCO_SERVER + "/api/-default-/public/cmis/versions/1.1/browser/root?objectId=" + FILE_ID
+                + "%3B1.0&cmisselector=content";
         URLtoGet += "&alf_ticket=" + getTicket();
 
         return executeQueryPlainText(URLtoGet);
@@ -186,7 +189,8 @@ public class HelloAlfrescoController
     {
         printCookies();
 
-        String URLtoGet = ALFRESCO_SERVER + "/api/-default-/public/cmis/versions/1.1/atom/content?id=" + FILE_ID;
+        String URLtoGet = ALFRESCO_SERVER + "/api/-default-/public/cmis/versions/1.1/browser/root?objectId=" + FILE_ID
+                + "%3B1.0&cmisselector=content";
 
         return executeQueryPlainText(URLtoGet);
     }
