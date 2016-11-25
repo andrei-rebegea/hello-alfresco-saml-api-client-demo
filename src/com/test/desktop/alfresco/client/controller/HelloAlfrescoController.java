@@ -74,9 +74,16 @@ public class HelloAlfrescoController
 
     public void parseTicket(String pageText)
     {
+        
+    //    {
+    //        "entry": {
+    //                "id": "TICKET_1a2a825683a36731fbb497569ecb2fd6fc1313e5",
+    //            "userId": "userA"
+    //        }
+    //}
         // parse the userID and Ticket
         userID = pageText.substring(pageText.indexOf("userId") + "userId".length() + 2).replaceAll("}", "").replaceAll("\"", "").trim();
-        int start = pageText.indexOf("ticket") + "ticket".length() + 2;
+        int start = pageText.indexOf("\"id\":") + "\"id\":".length() + 2;
         ticket = pageText.substring(start, pageText.indexOf(',', start)).replaceAll("\"", "").trim();
     }
 
@@ -151,7 +158,7 @@ public class HelloAlfrescoController
     {
         String URLtoCheck = ALFRESCO_SERVER + "/s/api/people/userA/sites";
         // uncomment the following line if you want to use the ticket
-        // URLtoCheck += "?alf_ticket=" + getTicket();
+         URLtoCheck += "?alf_ticket=" + getTicket();
         return executeQueryJSON(URLtoCheck);
 
     }
