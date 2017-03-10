@@ -156,7 +156,7 @@ public class HelloAlfrescoController
 
     public String listAllSites()
     {
-        String URLtoCheck = ALFRESCO_SERVER + "/s/api/people/userA/sites";
+        String URLtoCheck = ALFRESCO_SERVER + "/s/api/sites";
         // uncomment the following line if you want to use the ticket
          URLtoCheck += "?alf_ticket=" + getTicket();
         return executeQueryJSON(URLtoCheck);

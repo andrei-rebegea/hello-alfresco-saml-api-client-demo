@@ -135,8 +135,8 @@ public class HelloAlfresco extends Application
 
     protected void waitForReturn()
     {
-        while (!HelloAlfrescoController.ALFRESCO_AUTHENTICATE_RESPONSE.equals(internalBrowserWrapper.webEngine.getLocation())
-                && !HelloAlfrescoController.ALFRESCO_AUTHENTICATE_RESPONSE_S.equals(internalBrowserWrapper.webEngine.getLocation()))
+        while (!internalBrowserWrapper.webEngine.getLocation().startsWith(HelloAlfrescoController.ALFRESCO_AUTHENTICATE_RESPONSE)
+                && !internalBrowserWrapper.webEngine.getLocation().startsWith(HelloAlfrescoController.ALFRESCO_AUTHENTICATE_RESPONSE_S))
         {
             try
             {
@@ -162,14 +162,22 @@ public class HelloAlfresco extends Application
     {
         String location = internalBrowserWrapper.webEngine.getLocation();
         System.out.println(location);
-        try
-        {
-            Thread.sleep(1000);
-        }
-        catch (Exception e)
-        {
-            // don't care
-        }
+       
+   
+        final javafx.scene.web.WebEngine webEngine = internalBrowserWrapper.webEngine;
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
+            if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
+                org.w3c.dom.Document doc = webEngine.getDocument();
+                loaded();
+            }
+        });
+       // webEngine.loadContent("<h1>hello</h1>");
+        
+       // displayFunctionButtons();
+    }
+
+    public void displayFunctionButtons()
+    {
         {
             if (internalBrowserWrapper.webEngine.getDocument() == null)
             {
@@ -314,5 +322,11 @@ public class HelloAlfresco extends Application
         Scene resultsScene = new Scene(resultsScene2, 610, 610);
 
         primaryStage.setScene(resultsScene);
+    }
+
+    public void loaded()
+    {
+        System.out.println("ready loaded");
+        displayFunctionButtons();
     }
 }
